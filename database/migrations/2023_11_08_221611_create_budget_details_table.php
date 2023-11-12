@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('budget_details', function (Blueprint $table) {
             $table->id();
+            $table->integer('amount');
+            $table->decimal('price', 10, 2);
+            $table->decimal('discount', 10, 2)->default(0.00);
+            $table->decimal('subtotal', 10, 2);
+            $table->foreignId('budget_id')->constrained('budgets');
             $table->timestamps();
         });
     }

@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('contact');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('cnpj');
+            $table->foreignId('address_id')->constrained('addresses');
             $table->timestamps();
         });
     }

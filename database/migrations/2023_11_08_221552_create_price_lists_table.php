@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('price_lists', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('store_id')->constrained('stores');
+            $table->foreignId('product_id')->constrained('products');
+            $table->double('price');
+            $table->boolean('isActive');
             $table->timestamps();
         });
     }
