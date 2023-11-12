@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('complement')->nullable();
             $table->foreignId('zipcode_id')->constrained('zip_codes');
             $table->foreignId('entity_id')->constrained('entities');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

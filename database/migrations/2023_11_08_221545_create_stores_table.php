@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('cnpj');
             $table->foreignId('address_id')->constrained('addresses');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

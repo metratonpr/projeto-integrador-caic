@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('discount', 10, 2)->default(0.00);
             $table->decimal('subtotal', 10, 2);
             $table->foreignId('budget_id')->constrained('budgets');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

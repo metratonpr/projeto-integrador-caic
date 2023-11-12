@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('warranty')->nullable();
             $table->integer('warranty_time')->nullable();
             $table->foreignId('product_type_id')->constrained('product_types');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

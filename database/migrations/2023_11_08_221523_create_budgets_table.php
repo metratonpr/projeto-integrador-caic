@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('shipping_value', 10, 2)->nullable();
             $table->foreignId('address_id')->constrained('addresses');
             $table->foreignId('budget_type_id')->constrained('budget_types');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }
