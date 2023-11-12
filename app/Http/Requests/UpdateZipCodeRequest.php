@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateZipCodeRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateZipCodeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,16 @@ class UpdateZipCodeRequest extends FormRequest
      */
     public function rules(): array
     {
+        $zipCodeId = $this->route('zipcode');
+
         return [
-            //
+            'zipcode' => [
+                'required',
+                Rule::unique('zip_codes', 'zipcode')->ignore($zipCodeId),
+            ],
+            'place' => 'required|string',
+            'city_id' => 'required|exists:cities,id',
+            'neighborhood_id' => 'required|exists:neighborhoods,id',
         ];
     }
 }

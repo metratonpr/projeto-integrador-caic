@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateBudgetTypeRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateBudgetTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,13 @@ class UpdateBudgetTypeRequest extends FormRequest
      */
     public function rules(): array
     {
+        $budgetTypeId = $this->route('budget_type');
+
         return [
-            //
+            'name' => [
+                'required',
+                Rule::unique('budget_types', 'name')->ignore($budgetTypeId),
+            ],
         ];
     }
 }

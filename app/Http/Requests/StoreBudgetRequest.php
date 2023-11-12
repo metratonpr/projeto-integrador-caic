@@ -11,7 +11,7 @@ class StoreBudgetRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class StoreBudgetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'number' => 'required|unique:budgets,number',
+            'budget_date' => 'required|date',
+            'expiration_date' => 'required|date',
+            'delivery_date' => 'required|date',
+            'shipping_value' => 'required|numeric',
+            'address_id' => 'required|exists:addresses,id',
+            'budget_type_id' => 'required|exists:budget_types,id',
         ];
     }
 }

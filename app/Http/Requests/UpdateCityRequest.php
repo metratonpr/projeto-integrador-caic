@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCityRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateCityRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,14 @@ class UpdateCityRequest extends FormRequest
      */
     public function rules(): array
     {
+        $cityId = $this->route('city');
+
         return [
-            //
+            'name' => [
+                'required',
+                Rule::unique('cities', 'name')->ignore($cityId),
+            ],
+            'state_id' => 'required|exists:states,id',
         ];
     }
 }

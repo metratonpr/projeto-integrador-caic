@@ -11,7 +11,7 @@ class UpdatePriceListRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdatePriceListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'price' => 'required|numeric|min:0',
+            'isAvailable' => 'required|boolean',
+            'store_id' => 'required|exists:stores,id',
+            'product_id' => 'required|exists:products,id',
         ];
     }
 }

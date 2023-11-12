@@ -11,7 +11,7 @@ class UpdateAddressRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'number' => 'required',
+            'complement' => 'nullable',
+            'zipcode_id' => 'required|exists:zip_codes,id',
+            'entity_id' => 'required|exists:entities,id',
         ];
     }
 }

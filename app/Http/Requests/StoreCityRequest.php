@@ -11,7 +11,7 @@ class StoreCityRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreCityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|unique:cities,name',
+            'state_id' => 'required|exists:states,id',
         ];
     }
 }

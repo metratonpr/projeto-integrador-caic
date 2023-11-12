@@ -11,7 +11,7 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'description' => 'nullable|string', // Adicione suas regras de validação específicas aqui
+            'warranty' => 'nullable|string', // Adicione suas regras de validação específicas aqui
+            'warranty_time' => 'nullable|numeric|min:0', // Adicione suas regras de validação específicas aqui
+            'product_type_id' => 'required|exists:product_types,id',
         ];
     }
 }

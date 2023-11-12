@@ -11,7 +11,7 @@ class StoreEntityRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreEntityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|unique:entities,name',
+            'cpf_cnpj' => 'nullable|string', // Adicione suas regras de validação específicas aqui
+            'rg_ie' => 'nullable|string', // Adicione suas regras de validação específicas aqui
+            'email' => 'nullable|email|unique:entities,email', // Validação de e-mail único
+            'phone' => 'nullable|string', // Adicione suas regras de validação específicas aqui
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateNeighborhoodRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateNeighborhoodRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,14 @@ class UpdateNeighborhoodRequest extends FormRequest
      */
     public function rules(): array
     {
+        //www.seusite.com/neighborhoods/1
+        $neighborhoodId = $this->route('neighborhood');
+
         return [
-            //
+            'name' => [
+                'required',
+                Rule::unique('neighborhoods', 'name')->ignore($neighborhoodId),
+            ],
         ];
     }
 }
