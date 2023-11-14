@@ -29,7 +29,7 @@ class UpdateStateRequest extends FormRequest
                 'required',
                 Rule::unique('states', 'name')->ignore($stateId),
             ],
-            'country_id' => 'required|exists:countries,id',
+            
         ];
     }
 }
