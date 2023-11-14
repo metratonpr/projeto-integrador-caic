@@ -7,25 +7,7 @@ import StatesTable from './StatesTable';
 
 export default function Index({ auth, states }) {
 
-    const handleNew = () => {
-        // Redirecione para a página de edição do post com base na rota
-        router.visit(route("posts.create"));
-    };
-
-    const handleEdit = (post) => {
-        // Redirecione para a página de edição do post com base na rota
-        router.visit(route("posts.edit", post.id));
-    };
-
-    const handleRemove = (post) => {
-        if (window.confirm("Tem certeza de que deseja remover o post?")) {
-            // Implemente a lógica para remover o post (por exemplo, fazendo uma solicitação de exclusão)
-            // Após a exclusão, redirecione para a página inicial ou uma página apropriada
-            router.delete(route("posts.destroy", post.id));
-        }
-    };
-
-
+    
     return (
         <AuthenticatedLayout
             user={auth.user}
