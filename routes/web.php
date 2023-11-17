@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\ZipCodeController;
+use App\Models\ZipCode;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,6 +40,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('states', StateController::class)
+    ->middleware(['auth', 'verified']);
+
+Route::resource('cities', CityController::class)
+    ->middleware(['auth', 'verified']);
+
+Route::resource('zip_codes', ZipCodeController::class)
     ->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

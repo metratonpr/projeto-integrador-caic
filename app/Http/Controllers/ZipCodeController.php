@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ZipCode;
 use App\Http\Requests\StoreZipCodeRequest;
 use App\Http\Requests\UpdateZipCodeRequest;
+use Inertia\Inertia;
 
 class ZipCodeController extends Controller
 {
@@ -13,7 +14,10 @@ class ZipCodeController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('ZipCodes/Index', [
+            'states' =>
+            ZipCode::with(['user:id,name','city:id,name'])->latest()->get(),
+        ]);
     }
 
     /**
@@ -21,7 +25,7 @@ class ZipCodeController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('ZipCodes/Create');
     }
 
     /**
@@ -29,38 +33,73 @@ class ZipCodeController extends Controller
      */
     public function store(StoreZipCodeRequest $request)
     {
-        //
+        $zip_code = $request->validated();
+
+        $create = $request->user()->states()->create($zip_code);
+
+        if ($create) {
+            return redirect()->route('zip_codes.index');
+        }
+        return abort(500);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ZipCode $zipCode)
+    public function show($id)
     {
-        //
+        return Inertia::render('ZipCodes/Show', [
+            'zip_codes' => ZipCode::findOrFail($id),
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ZipCode $zipCode)
+    public function edit($id)
     {
-        //
+        return Inertia::render(
+            'ZipCodes/Edit',
+            [
+                'zip_codes' => ZipCode::findOrFail($id),
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateZipCodeRequest $request, ZipCode $zipCode)
+    public function update(UpdateZipCodeRequest $request, $id)
     {
-        //
+        // Encontra o state a ser atualizado
+        $zip_code = ZipCode::findOrFail($id);
+
+        //  $this->authorize('update', $zip_code);
+
+        // Valida os dados do formulário usando UpdatestateRequest
+        $validatedData = $request->validated();
+
+        // Atualize outros campos com os dados validados
+        $zip_code->update($validatedData);
+
+        return redirect()->route('zip_codes.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ZipCode $zipCode)
+    public function destroy($id)
     {
-        //
+        $zip_code = ZipCode::findOrFail($id);
+
+        // $this->authorize('delete', $zip_code);
+
+        $delete = $zip_code->delete();
+
+        if ($delete) {
+            return redirect()->route('zip_codes.index');
+        }
+
+        return abort(500);
     }
 }

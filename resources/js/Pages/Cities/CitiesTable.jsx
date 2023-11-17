@@ -3,13 +3,13 @@ import { usePage } from '@inertiajs/react';
 import { router } from "@inertiajs/react";
 
 const CustomTable = () => {
-  const { states } = usePage().props;
+  const { cities } = usePage().props;
 
   const handleRemove = (state) => {
-    if (window.confirm("Tem certeza de que deseja remover o Estado?")) {
+    if (window.confirm("Tem certeza de que deseja remover a Cidade?")) {
         // Implemente a lógica para remover o post (por exemplo, fazendo uma solicitação de exclusão)
         // Após a exclusão, redirecione para a página inicial ou uma página apropriada
-        router.delete(route("states.destroy", state.id));
+        router.delete(route("cities.destroy", state.id));
     }
 };
 
@@ -17,11 +17,11 @@ const CustomTable = () => {
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div className="flex items-center gap-4">
         <NavLink
-          href={route('states.create')}
-          active={route().current('states.index')}
+          href={route('cities.create')}
+          active={route().current('cities.index')}
           className="inline-block py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
-          New State
+          New City
         </NavLink>
       </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -30,20 +30,26 @@ const CustomTable = () => {
             <th scope="col" className="px-6 py-3">
               Name
             </th>
+            <th scope="col" className="px-6 py-3">
+              State
+            </th>
             <th scope="col" className="px-6 py-3" colSpan={2} style={{ width: '20%' }}>
               Actions
             </th>
           </tr>
         </thead>
         <tbody>
-          {states.map((state) => (
-            <tr key={state.id} className="bg-white dark:bg-gray-800">
+          {cities.map((city) => (
+            <tr key={city.id} className="bg-white dark:bg-gray-800">
               <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {state.name}
+                {city.name}
+              </th>
+              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {city.state.name}
               </th>
               <td className="px-6 py-4 text-right" style={{ width: '10%' }}>
                 <NavLink
-                  href={route('states.edit', { state: state.id })}
+                  href={route('cities.edit', { city: city.id })}
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                 >
                   Edit
@@ -51,7 +57,7 @@ const CustomTable = () => {
                 </td>
                 <td className="px-6 py-4 text-right" style={{ width: '10%' }}>
                 <button
-                  onClick={() => handleRemove(state)}
+                  onClick={() => handleRemove(city)}
                   className="font-medium text-red-600 dark:text-red-500 hover:underline"
                 >
                   Delete
