@@ -30,6 +30,9 @@ export default function Authenticated({ user, header, children }) {
                                 <NavLink href={route('cities.index')} active={route().current('cities.index')}>
                                     City
                                 </NavLink>
+                                <NavLink href={route('neighborhoods.index')} active={route().current('neighborhoods.index')}>
+                                    Neighborhoods
+                                </NavLink>
                             </div>
                         </div>
 
@@ -106,6 +109,9 @@ export default function Authenticated({ user, header, children }) {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('cities.index')} active={route().current('cities.index')}>
                             City
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('neighborhoods.index')} active={route().current('neighborhoods.index')}>
+                            Neighborhoods
                         </ResponsiveNavLink>
                     </div>
 

@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\NeighborhoodController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\ZipCodeController;
+use App\Models\Neighborhood;
 use App\Models\ZipCode;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +45,9 @@ Route::resource('states', StateController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('cities', CityController::class)
+    ->middleware(['auth', 'verified']);
+
+Route::resource('neighborhoods', NeighborhoodController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('zip_codes', ZipCodeController::class)

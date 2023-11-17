@@ -6,7 +6,7 @@ const CustomTable = () => {
   const { cities } = usePage().props;
 
   const handleRemove = (state) => {
-    if (window.confirm("Tem certeza de que deseja remover a Cidade?")) {
+    if (window.confirm("Are you sure you want to remove the City?")) {
         // Implemente a lógica para remover o post (por exemplo, fazendo uma solicitação de exclusão)
         // Após a exclusão, redirecione para a página inicial ou uma página apropriada
         router.delete(route("cities.destroy", state.id));

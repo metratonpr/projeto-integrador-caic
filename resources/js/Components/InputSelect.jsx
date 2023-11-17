@@ -18,6 +18,9 @@ export default forwardRef(function InputSelect({ type = 'text', options = [], cl
     if (type === 'select') {
         return (
             <select {...commonInputProps}>
+                 <option value={""} disabled>
+                        Select a Item
+                    </option>
                 {options.map((option, index) => (
                     <option key={index} value={option.id}>
                         {option.label}

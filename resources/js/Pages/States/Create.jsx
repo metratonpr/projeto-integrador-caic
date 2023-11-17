@@ -17,7 +17,7 @@ export default function Create({ auth }) {
     };
 
     const cancel = () => {
-        if (window.confirm("Tem certeza de que deseja cancelar?")) {
+        if (window.confirm("Are you sure you want to cancel?")) {
             reset();
         }
     };
