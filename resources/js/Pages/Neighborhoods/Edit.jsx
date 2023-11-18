@@ -3,17 +3,18 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, usePage  } from '@inertiajs/react';
 import StateForm from './NeighborhoodForm';
 
-export default function Create({ auth, state }) {
+export default function Create({ auth, neighborhood }) {
     const { data, setData, patch, processing, reset, errors } = useForm({
-        name: state.name || "",
+        name: neighborhood.name || "",
     });
 
     const submit = (e) => {
         e.preventDefault();
-        patch(route('neighborhoods.update', state.id), {});
+        patch(route('neighborhoods.update', neighborhood.id), {});
     };
 
     const cancel = () => {
+  
         if (window.confirm("Are you sure you want to cancel?")) {
             reset();
         }

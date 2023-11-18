@@ -6,7 +6,7 @@ const CustomTable = () => {
   const { cities } = usePage().props;
 
   const handleRemove = (state) => {
-    if (window.confirm("Are you sure you want to remove the City?")) {
+    if (window.confirm(`Are you sure you want to remove the ${state.name}`)) {
         // Implemente a lógica para remover o post (por exemplo, fazendo uma solicitação de exclusão)
         // Após a exclusão, redirecione para a página inicial ou uma página apropriada
         router.delete(route("cities.destroy", state.id));
@@ -15,7 +15,7 @@ const CustomTable = () => {
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mb-2">
         <NavLink
           href={route('cities.create')}
           active={route().current('cities.index')}
@@ -24,7 +24,7 @@ const CustomTable = () => {
           New City
         </NavLink>
       </div>
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-2">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">
