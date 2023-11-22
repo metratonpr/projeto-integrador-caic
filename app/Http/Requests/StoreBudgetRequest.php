@@ -29,6 +29,12 @@ class StoreBudgetRequest extends FormRequest
             'shipping_value' => 'required|numeric',
             'address_id' => 'required|exists:addresses,id',
             'budget_type_id' => 'required|exists:budget_types,id',
+            'budget.budget_details' => 'array|required', // Adicionando a regra para o relacionamento 'budget_details'
+            'budget.budget_details.*.amount' => 'required|numeric|min:1',
+            'budget.budget_details.*.price' => 'required|numeric|min:0',
+            'budget.budget_details.*.discount' => 'nullable|numeric|min:0|max:100',
+            'budget.budget_details.*.subtotal' => 'required|numeric|min:0',
+            'budget.budget_details.*.price_list_id' => 'required|exists:price_lists,id',
         ];
     }
 }

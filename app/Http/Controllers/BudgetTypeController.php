@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BudgetType;
 use App\Http\Requests\StoreBudgetTypeRequest;
 use App\Http\Requests\UpdateBudgetTypeRequest;
+use Inertia\Inertia;
 
 class BudgetTypeController extends Controller
 {
@@ -13,7 +14,9 @@ class BudgetTypeController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('BudgetTypes/Index', [
+            'budgetTypes' => BudgetType::latest()->get(),
+        ]);
     }
 
     /**
@@ -21,7 +24,7 @@ class BudgetTypeController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('BudgetTypes/Create');
     }
 
     /**
@@ -29,38 +32,63 @@ class BudgetTypeController extends Controller
      */
     public function store(StoreBudgetTypeRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $budgetType = BudgetType::create($validatedData);
+
+        return redirect()->route('budget-types.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(BudgetType $budgetType)
+    public function show($id)
     {
-        //
+        return Inertia::render('BudgetTypes/Show', [
+            'budgetType' => BudgetType::findOrFail($id),
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(BudgetType $budgetType)
+    public function edit($id)
     {
-        //
+        return Inertia::render(
+            'BudgetTypes/Edit',
+            [
+                'budgetType' => BudgetType::findOrFail($id),
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBudgetTypeRequest $request, BudgetType $budgetType)
+    public function update(UpdateBudgetTypeRequest $request, $id)
     {
-        //
+        $budgetType = BudgetType::findOrFail($id);
+
+        $validatedData = $request->validated();
+
+        $budgetType->update($validatedData);
+
+        return redirect()->route('budget-types.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BudgetType $budgetType)
+    public function destroy($id)
     {
-        //
+        $budgetType = BudgetType::findOrFail($id);
+
+        $delete = $budgetType->delete();
+
+        if ($delete) {
+            return redirect()->route('budget-types.index');
+        }
+
+        return abort(500);
     }
 }

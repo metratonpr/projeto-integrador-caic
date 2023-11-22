@@ -16,6 +16,7 @@ class Entity extends Model
     {
         return $this->hasMany(Address::class);
     }
+    
 
     public function user(): BelongsTo
     {

@@ -34,7 +34,7 @@ class StateController extends Controller
     public function store(StoreStateRequest $request)
     {
         $state = $request->validated();
-   
+
         $create = $request->user()->states()->create($state);
 
         if ($create) {
@@ -47,7 +47,7 @@ class StateController extends Controller
      * Display the specified resource.
      */
     public function show($id)
-    {       
+    {
         return Inertia::render('States/Show', [
             'state' => State::findOrFail($id),
         ]);
@@ -75,13 +75,13 @@ class StateController extends Controller
          $state = State::findOrFail($id);
 
         //  $this->authorize('update', $state);
- 
+
          // Valida os dados do formulário usando UpdatestateRequest
          $validatedData = $request->validated();
 
          // Atualize outros campos com os dados validados
          $state->update($validatedData);
- 
+
          return redirect()->route('states.index');
     }
 
@@ -92,7 +92,7 @@ class StateController extends Controller
     {
          $state = State::findOrFail($id);
 
-        // $this->authorize('delete', $state);   
+        // $this->authorize('delete', $state);
 
         $delete = $state->delete();
 

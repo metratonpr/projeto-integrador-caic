@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Entity;
 use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
+use Inertia\Inertia;
 
 class EntityController extends Controller
 {
@@ -13,7 +14,9 @@ class EntityController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Entities/Index', [
+            'entities' => Entity::latest()->get(),
+        ]);
     }
 
     /**
@@ -21,7 +24,7 @@ class EntityController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Entities/Create');
     }
 
     /**
@@ -29,38 +32,63 @@ class EntityController extends Controller
      */
     public function store(StoreEntityRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $entity = Entity::create($validatedData);
+
+        return redirect()->route('entities.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Entity $entity)
+    public function show($id)
     {
-        //
+        return Inertia::render('Entities/Show', [
+            'entity' => Entity::findOrFail($id),
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Entity $entity)
+    public function edit($id)
     {
-        //
+        return Inertia::render(
+            'Entities/Edit',
+            [
+                'entity' => Entity::findOrFail($id),
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEntityRequest $request, Entity $entity)
+    public function update(UpdateEntityRequest $request, $id)
     {
-        //
+        $entity = Entity::findOrFail($id);
+
+        $validatedData = $request->validated();
+
+        $entity->update($validatedData);
+
+        return redirect()->route('entities.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Entity $entity)
+    public function destroy($id)
     {
-        //
+        $entity = Entity::findOrFail($id);
+
+        $delete = $entity->delete();
+
+        if ($delete) {
+            return redirect()->route('entities.index');
+        }
+
+        return abort(500);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Store;
 use App\Http\Requests\StoreStoreRequest;
 use App\Http\Requests\UpdateStoreRequest;
+use Inertia\Inertia;
 
 class StoreController extends Controller
 {
@@ -13,7 +14,9 @@ class StoreController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Stores/Index', [
+            'stores' => Store::with('address')->latest()->get(),
+        ]);
     }
 
     /**
@@ -21,7 +24,7 @@ class StoreController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Stores/Create');
     }
 
     /**
@@ -29,38 +32,63 @@ class StoreController extends Controller
      */
     public function store(StoreStoreRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $store = Store::create($validatedData);
+
+        return redirect()->route('stores.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Store $store)
+    public function show($id)
     {
-        //
+        return Inertia::render('Stores/Show', [
+            'store' => Store::with('address')->findOrFail($id),
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Store $store)
+    public function edit($id)
     {
-        //
+        return Inertia::render(
+            'Stores/Edit',
+            [
+                'store' => Store::findOrFail($id),
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStoreRequest $request, Store $store)
+    public function update(UpdateStoreRequest $request, $id)
     {
-        //
+        $store = Store::findOrFail($id);
+
+        $validatedData = $request->validated();
+
+        $store->update($validatedData);
+
+        return redirect()->route('stores.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Store $store)
+    public function destroy($id)
     {
-        //
+        $store = Store::findOrFail($id);
+
+        $delete = $store->delete();
+
+        if ($delete) {
+            return redirect()->route('stores.index');
+        }
+
+        return abort(500);
     }
 }
