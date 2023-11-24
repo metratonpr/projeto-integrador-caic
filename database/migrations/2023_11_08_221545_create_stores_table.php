@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('cnpj');
             $table->string('number');
+            $table->string('complement');
             $table->foreignId('zip_code_id')->constrained('zip_codes');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();

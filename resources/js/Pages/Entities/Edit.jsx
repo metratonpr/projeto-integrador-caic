@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, usePage  } from '@inertiajs/react';
-import StateForm from './StoreForm';
+import EntityForm from './EntityForm';
 import HeaderCustom from '@/Components/HeaderCustom';
 
-export default function Create({ auth, store, zip_codes }) {
+export default function Create({ auth, entity }) {
     const { data, setData, patch, processing, reset, errors } = useForm({
-        name: store.name || "",
-        contact: store.contact || "",
-        email: store.email || "",
-        phone: store.phone ||"",
-        cnpj: store.cnpj ||"",
-        number: store.number ||"",
-        complement: store.complement ||"",
-        zip_code_id: store.zip_code_id ||"",
+        name: entity.name || "",
+        cpf_cnpj: entity.cpf_cnpj || "",
+        rg_ie: entity.rg_ie || "",
+        email: entity.email || "",
+        phone: entity.phone || "",
     });
 
     const submit = (e) => {
         e.preventDefault();
-        patch(route('stores.update', store.id), {});
+        patch(route('entities.update', entity.id), {});
     };
 
     const cancel = () => {
@@ -28,15 +25,14 @@ export default function Create({ auth, store, zip_codes }) {
     };
 
     return (
-        <HeaderCustom auth={auth} title={"Stores"} head={"Edit Store"}>
-                <StateForm
+        <HeaderCustom auth={auth} title={"Entities"} head={"Edit Entity"}>
+                <EntityForm
                     data={data}
                     errors={errors}
                     setData={setData}
                     submit={submit}
                     cancel={cancel}
                     processing={processing}
-                    zip_codes={zip_codes}
                 />
           </HeaderCustom>
 

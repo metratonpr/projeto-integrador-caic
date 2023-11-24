@@ -15,7 +15,7 @@ class EntityController extends Controller
     public function index()
     {
         return Inertia::render('Entities/Index', [
-            'entities' => Entity::latest()->get(),
+            'entities' => Entity::with(['user:id,name'])->latest()->get(),
         ]);
     }
 

@@ -13,13 +13,13 @@ import TableButton from '@/Components/TableButton';
 import NavLink from '@/Components/NavLink';
 
 const CustomTable = () => {
-  const { stores } = usePage().props;
+  const { entities } = usePage().props;
 
-  const handleRemove = (store) => {
-    if (window.confirm(`Are you sure you want to remove the ${store.name}?`)) {
+  const handleRemove = (entity) => {
+    if (window.confirm(`Are you sure you want to remove the ${entity.name}?`)) {
         // Implemente a lógica para remover o post (por exemplo, fazendo uma solicitação de exclusão)
         // Após a exclusão, redirecione para a página inicial ou uma página apropriada
-        router.delete(route("stores.destroy", store.id));
+        router.delete(route("entities.destroy", entity.id));
     }
 };
 
@@ -27,41 +27,35 @@ const CustomTable = () => {
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div className="flex items-center gap-4 mb-2">
         <NavLink
-          href={route('stores.create')}
-          active={route().current('stores.index')}
+          href={route('entities.create')}
+          active={route().current('entities.index')}
           className="inline-block py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 p-5"
         >
-          New Store
+          New Entity
         </NavLink>
       </div>
       <DataTable>
         <TableHeader>
           <TableRow>
             <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell>Contact</TableHeaderCell>
+            <TableHeaderCell>CNPJ/CPF</TableHeaderCell>
+            <TableHeaderCell>RG/IE</TableHeaderCell>
             <TableHeaderCell>E-mail</TableHeaderCell>
             <TableHeaderCell>Phone</TableHeaderCell>
-            <TableHeaderCell>CNPJ</TableHeaderCell>
-            <TableHeaderCell>Number</TableHeaderCell>
-            <TableHeaderCell>Complement</TableHeaderCell>
-            <TableHeaderCell>Zip Code</TableHeaderCell>
             <TableHeaderCell colSpan={2} style={{ width: '20%' }}>Actions</TableHeaderCell>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {stores.map((store) => (
-            <TableRow key={store.id}>
-              <TableCell style={{ width: '70%' }}>{store.name}</TableCell>
-              <TableCell style={{ width: '70%' }}>{store.contact}</TableCell>
-              <TableCell style={{ width: '70%' }}>{store.email}</TableCell>
-              <TableCell style={{ width: '70%' }}>{store.phone}</TableCell>
-              <TableCell style={{ width: '70%' }}>{store.cnpj}</TableCell>
-              <TableCell style={{ width: '70%' }}>{store.number}</TableCell>
-              <TableCell style={{ width: '70%' }}>{store.complement}</TableCell>
-              <TableCell style={{ width: '70%' }}>{store.zip_code.place}</TableCell>
+          {entities.map((entity) => (
+            <TableRow key={entity.id}>
+              <TableCell >{entity.name}</TableCell>
+              <TableCell >{entity.cpf_cnpj}</TableCell>
+              <TableCell >{entity.rg_ie}</TableCell>
+              <TableCell >{entity.email}</TableCell>
+              <TableCell >{entity.phone}</TableCell>
               <TableCell style={{ width: '10%' }}>
                 <NavLink
-                  href={route('stores.edit', { store: store.id })}
+                  href={route('entities.edit', { entity: entity.id })}
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                 >
                   Edit
@@ -69,7 +63,7 @@ const CustomTable = () => {
               </TableCell>
               <TableCell style={{ width: '10%' }}>
                 <TableButton
-                  onClick={() => handleRemove(store)}
+                  onClick={() => handleRemove(entity)}
                   className="text-red-600 dark:text-red-500 hover:underline"
                 >
                   Delete

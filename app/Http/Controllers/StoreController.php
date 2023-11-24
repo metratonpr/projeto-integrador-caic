@@ -17,7 +17,7 @@ class StoreController extends Controller
     public function index()
     {
         return Inertia::render('Stores/Index', [
-            'stores' => Store::with(['user:id,name', 'zipcode:id,place'])->latest()->get(),
+            'stores' => Store::with(['user:id,name', 'zip_code:id,place'])->latest()->get(),
         ]);
     }
 
