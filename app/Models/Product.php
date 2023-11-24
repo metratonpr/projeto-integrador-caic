@@ -17,7 +17,7 @@ class Product extends Model
         'warranty_time', 'product_type_id'
     ];
 
-    public function productType()
+    public function product_type()
     {
         return $this->belongsTo(ProductType::class, 'product_type_id');
     }

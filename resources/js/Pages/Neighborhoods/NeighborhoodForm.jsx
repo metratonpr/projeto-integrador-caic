@@ -4,7 +4,7 @@ import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-const StateForm = ({
+const CustomForm = ({
     data,
     errors,
     setData,
@@ -41,4 +41,4 @@ const StateForm = ({
     );
 };
 
-export default StateForm;
+export default CustomForm;

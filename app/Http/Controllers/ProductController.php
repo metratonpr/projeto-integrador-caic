@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\ProductType;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -15,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         return Inertia::render('Products/Index', [
-            'products' => Product::latest()->get(),
+            'products' => Product::with(['user:id,name', 'product_type:id,name'])->latest()->get(),
         ]);
     }
 
@@ -24,7 +25,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Products/Create');
+        return Inertia::render('Products/Create', [
+            'product_types' => ProductType::select('id', 'name as label')->orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -34,7 +37,7 @@ class ProductController extends Controller
     {
         $validatedData = $request->validated();
 
-        $product = Product::create($validatedData);
+        $create = $request->user()->products()->create($validatedData);
 
         return redirect()->route('products.index');
     }
@@ -58,6 +61,7 @@ class ProductController extends Controller
             'Products/Edit',
             [
                 'product' => Product::findOrFail($id),
+                'product_types' => ProductType::select('id', 'name as label')->orderBy('name')->get(),
             ]
         );
     }

@@ -59,4 +59,28 @@ class User extends Authenticatable
     function zipcodes() : HasMany{
         return $this->hasMany(ZipCode::class);
     }
+
+    function product_types() : HasMany{
+        return $this->hasMany(ProductType::class);
+    }
+
+    function products() : HasMany{
+        return $this->hasMany(Product::class);
+    }
+
+    function stores() : HasMany{
+        return $this->hasMany(Store::class);
+    }
+
+    function budgets() : HasMany{
+        return $this->hasMany(Budget::class);
+    }
+
+    function entities() : HasMany{
+        return $this->hasMany(Entity::class);
+    }
+
+    function price_lists() : HasMany{
+        return $this->hasMany(Entity::class);
+    }
 }

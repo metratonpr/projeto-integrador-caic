@@ -36,6 +36,12 @@ export default function Authenticated({ user, header, children }) {
                                 <NavLink href={route('zip-codes.index')} active={route().current('zip-codes.index')}>
                                     Zip Codes
                                 </NavLink>
+                                <NavLink href={route('product-types.index')} active={route().current('product-types.index')}>
+                                    Product Type
+                                </NavLink>
+                                <NavLink href={route('products.index')} active={route().current('products.index')}>
+                                    Products
+                                </NavLink>
                             </div>
                         </div>
 
@@ -118,6 +124,12 @@ export default function Authenticated({ user, header, children }) {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('zip-codes.index')} active={route().current('zip-codes.index')}>
                             Zip Code
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('product-types.index')} active={route().current('product-types.index')}>
+                            Product Types
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('products.index')} active={route().current('products.index')}>
+                            Products
                         </ResponsiveNavLink>
                     </div>
 

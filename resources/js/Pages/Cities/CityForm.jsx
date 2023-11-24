@@ -5,7 +5,7 @@ import InputSelect from "@/Components/InputSelect";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-const CityForm = ({
+const CustomForm = ({
     data,
     errors,
     setData,
@@ -69,4 +69,4 @@ const CityForm = ({
     );
 };
 
-export default CityForm;
+export default CustomForm;

@@ -15,7 +15,7 @@ class ProductTypeController extends Controller
     public function index()
     {
         return Inertia::render('ProductTypes/Index', [
-            'productTypes' => ProductType::latest()->get(),
+            'product_types' => ProductType::latest()->get(),
         ]);
     }
 
@@ -34,7 +34,7 @@ class ProductTypeController extends Controller
     {
         $validatedData = $request->validated();
 
-        $productType = ProductType::create($validatedData);
+        $create = $request->user()->product_types()->create($validatedData);
 
         return redirect()->route('product-types.index');
     }
@@ -45,7 +45,7 @@ class ProductTypeController extends Controller
     public function show($id)
     {
         return Inertia::render('ProductTypes/Show', [
-            'productType' => ProductType::findOrFail($id),
+            'product_type' => ProductType::findOrFail($id),
         ]);
     }
 
@@ -57,7 +57,7 @@ class ProductTypeController extends Controller
         return Inertia::render(
             'ProductTypes/Edit',
             [
-                'productType' => ProductType::findOrFail($id),
+                'product_type' => ProductType::findOrFail($id),
             ]
         );
     }
@@ -67,11 +67,11 @@ class ProductTypeController extends Controller
      */
     public function update(UpdateProductTypeRequest $request, $id)
     {
-        $productType = ProductType::findOrFail($id);
+        $product_type = ProductType::findOrFail($id);
 
         $validatedData = $request->validated();
 
-        $productType->update($validatedData);
+        $product_type->update($validatedData);
 
         return redirect()->route('product-types.index');
     }
@@ -81,9 +81,9 @@ class ProductTypeController extends Controller
      */
     public function destroy($id)
     {
-        $productType = ProductType::findOrFail($id);
+        $product_type = ProductType::findOrFail($id);
 
-        $delete = $productType->delete();
+        $delete = $product_type->delete();
 
         if ($delete) {
             return redirect()->route('product-types.index');
