@@ -12,8 +12,8 @@ export default function Create({ auth, zip_code,  cities, neighborhoods }) {
     });
 
     const submit = (e) => {
-        e.preventDefault();
-        patch(route('zip-codes.update', state.id), {});
+        console.log(data)
+        patch(route('zip-codes.update', zip_code.id), {});
     };
 
     const cancel = () => {

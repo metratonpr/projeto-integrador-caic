@@ -34,9 +34,12 @@ class PriceListController extends Controller
     {
         $validatedData = $request->validated();
 
-        $priceList = PriceList::create($validatedData);
+        $create = $request->user()->cities()->create($validatedData);
 
-        return redirect()->route('price-lists.index');
+        if ($create) {
+            return redirect()->route('price-lists.index');
+        }
+        return abort(500);
     }
 
     /**

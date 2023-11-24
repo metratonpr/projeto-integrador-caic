@@ -38,8 +38,11 @@ class ProductController extends Controller
         $validatedData = $request->validated();
 
         $create = $request->user()->products()->create($validatedData);
+        if ($create) {
 
-        return redirect()->route('products.index');
+            return redirect()->route('products.index');
+        }
+        return abort(500);
     }
 
     /**

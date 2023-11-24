@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Store;
 use App\Http\Requests\StoreStoreRequest;
 use App\Http\Requests\UpdateStoreRequest;
+use App\Models\Address;
+use App\Models\ZipCode;
 use Inertia\Inertia;
 
 class StoreController extends Controller
@@ -15,7 +17,7 @@ class StoreController extends Controller
     public function index()
     {
         return Inertia::render('Stores/Index', [
-            'stores' => Store::with('address')->latest()->get(),
+            'stores' => Store::with(['user:id,name', 'zipcode:id,place'])->latest()->get(),
         ]);
     }
 
@@ -24,7 +26,9 @@ class StoreController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Stores/Create');
+        return Inertia::render('Stores/Create',[
+            'zip_codes' => ZipCode::select('id', 'place as label')->orderBy('place')->get(),
+        ]);
     }
 
     /**
@@ -34,9 +38,13 @@ class StoreController extends Controller
     {
         $validatedData = $request->validated();
 
-        $store = Store::create($validatedData);
+        $create = $request->user()->stores()->create($validatedData );
 
-        return redirect()->route('stores.index');
+        if ($create) {
+            return redirect()->route('stores.index');
+        }
+        return abort(500);
+
     }
 
     /**
@@ -58,6 +66,7 @@ class StoreController extends Controller
             'Stores/Edit',
             [
                 'store' => Store::findOrFail($id),
+                'zip_codes' => ZipCode::select('id', 'place as label')->orderBy('place')->get(),
             ]
         );
     }

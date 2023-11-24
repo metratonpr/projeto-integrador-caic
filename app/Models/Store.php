@@ -12,12 +12,12 @@ class Store extends Model
 
     protected $fillable = [
         'name', 'contact', 'email', 'phone', 'cnpj',
-        'number', 'complement', 'address_id'
+        'number', 'complement', 'zip_code_id'
     ];
 
-    public function address()
+    public function zip_code()
     {
-        return $this->belongsTo(Address::class, 'address_id');
+        return $this->belongsTo(ZipCode::class, 'zip_code_id');
     }
 
     public function priceList()
@@ -30,4 +30,5 @@ class Store extends Model
     {
         return $this->belongsTo(User::class);
     }
+
 }

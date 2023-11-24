@@ -75,7 +75,7 @@ class User extends Authenticatable
     function budgets() : HasMany{
         return $this->hasMany(Budget::class);
     }
-
+ 
     function entities() : HasMany{
         return $this->hasMany(Entity::class);
     }

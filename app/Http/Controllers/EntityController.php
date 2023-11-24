@@ -34,9 +34,12 @@ class EntityController extends Controller
     {
         $validatedData = $request->validated();
 
-        $entity = Entity::create($validatedData);
+        $create = $request->user()->entities()->create($validatedData);
 
-        return redirect()->route('entities.index');
+        if ($create) {
+            return redirect()->route('entities.index');
+        }
+        return abort(500);
     }
 
     /**

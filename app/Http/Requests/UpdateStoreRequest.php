@@ -36,7 +36,7 @@ class UpdateStoreRequest extends FormRequest
             'cnpj' => 'nullable|string', // Adicione suas regras de validação específicas aqui
             'number' => 'nullable|string', // Adicione suas regras de validação específicas aqui
             'complement' => 'nullable|string', // Adicione suas regras de validação específicas aqui
-            'address_id' => 'required|exists:addresses,id',
+            'zip_code_id' => 'required|exists:zip_codes,id',
         ];
     }
 }

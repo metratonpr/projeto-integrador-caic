@@ -69,18 +69,18 @@ class NeighborhoodController extends Controller
      */
     public function update(UpdateNeighborhoodRequest $request, $id)
     {
-       // Encontra o state a ser atualizado
-       $neighborhood = Neighborhood::findOrFail($id);
+        // Encontra o state a ser atualizado
+        $neighborhood = Neighborhood::findOrFail($id);
 
-       //  $this->authorize('update', $neighborhood);
+        //  $this->authorize('update', $neighborhood);
 
-       // Valida os dados do formulário usando UpdatestateRequest
-       $validatedData = $request->validated();
+        // Valida os dados do formulário usando UpdatestateRequest
+        $validatedData = $request->validated();
 
-       // Atualize outros campos com os dados validados
-       $neighborhood->update($validatedData);
+        // Atualize outros campos com os dados validados
+        $neighborhood->update($validatedData);
 
-       return redirect()->route('neighborhoods.index');
+        return redirect()->route('neighborhoods.index');
     }
 
     /**
@@ -88,11 +88,11 @@ class NeighborhoodController extends Controller
      */
     public function destroy($id)
     {
-       $neighborhood = Neighborhood::findOrFail($id);
+        $neighborhood = Neighborhood::findOrFail($id);
 
         // $this->authorize('delete',$neighborhood);
 
-        $delete =$neighborhood->delete();
+        $delete = $neighborhood->delete();
 
         if ($delete) {
             return redirect()->route('neighborhoods.index');

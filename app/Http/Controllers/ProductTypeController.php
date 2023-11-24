@@ -36,7 +36,12 @@ class ProductTypeController extends Controller
 
         $create = $request->user()->product_types()->create($validatedData);
 
-        return redirect()->route('product-types.index');
+        if ($create) {
+            return redirect()->route('product-types.index');
+        }
+        return abort(500);
+
+
     }
 
     /**

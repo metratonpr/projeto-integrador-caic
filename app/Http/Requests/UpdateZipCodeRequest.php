@@ -22,7 +22,7 @@ class UpdateZipCodeRequest extends FormRequest
      */
     public function rules(): array
     {
-        $zipCodeId = $this->route('zipcode');
+        $zipCodeId = $this->route('zip_code');
 
         return [
             'zipcode' => [

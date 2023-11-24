@@ -34,9 +34,12 @@ class AddressController extends Controller
     {
         $validatedData = $request->validated();
 
-        $address = Address::create($validatedData);
+        $create = $request->user()->addresses()->create($validatedData);
 
-        return redirect()->route('addresses.index');
+        if ($create) {
+            return redirect()->route('addresses.index');
+        }
+        return abort(500);
     }
 
     /**
