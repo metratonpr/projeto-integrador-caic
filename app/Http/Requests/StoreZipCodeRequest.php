@@ -22,14 +22,11 @@ class StoreZipCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'contact' => 'nullable|string', // Adicione suas regras de validação específicas aqui
-            'email' => 'nullable|email|unique:stores,email', // Validação de e-mail único
-            'phone' => 'nullable|string', // Adicione suas regras de validação específicas aqui
-            'cnpj' => 'nullable|string', // Adicione suas regras de validação específicas aqui
-            'number' => 'nullable|string', // Adicione suas regras de validação específicas aqui
-            'complement' => 'nullable|string', // Adicione suas regras de validação específicas aqui
-            'address_id' => 'required|exists:addresses,id',
+            'zipcode' => 'required|string',
+            'place' => 'required|string',
+            'city_id' => 'required|exists:cities,id',
+            'neighborhood_id' => 'required|exists:neighborhoods,id',
+
         ];
     }
 }

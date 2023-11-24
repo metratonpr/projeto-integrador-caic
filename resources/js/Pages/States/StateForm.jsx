@@ -13,7 +13,7 @@ const StateForm = ({
     processing
 }) => {
     return (
-        <form onSubmit={submit} encType="multipart/form-data">
+        <form onSubmit={submit} encType="multipart/form-data" className="w-1/2 mx-auto">
             <div>
                 <InputLabel htmlFor="name" value="Name" />
                 <TextInput

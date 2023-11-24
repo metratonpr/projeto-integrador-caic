@@ -17,7 +17,7 @@ class ZipCode extends Model
         return   $this->belongsTo(City::class, 'city_id');
     }
 
-    public function neighbordhood()
+    public function neighborhood()
     {
         return $this->belongsTo(Neighborhood::class, 'neighborhood_id');
     }

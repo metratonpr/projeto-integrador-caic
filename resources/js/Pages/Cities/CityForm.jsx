@@ -15,7 +15,7 @@ const CityForm = ({
     states,
 }) => {
     return (
-        <form onSubmit={submit} encType="multipart/form-data">
+        <form onSubmit={submit} encType="multipart/form-data" className="w-1/2 mx-auto">
 
                 <div className="mb-2">
                     <InputLabel htmlFor="name" value="Name" />

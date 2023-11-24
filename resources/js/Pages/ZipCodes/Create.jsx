@@ -1,17 +1,19 @@
-import React from 'react';
-import CityForm from './CityForm';
-import HeaderCustom from '@/Components/HeaderCustom';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, useForm } from "@inertiajs/react";
+import StateForm from "./ZipCodeForm";
+import HeaderCustom from "@/Components/HeaderCustom";
 
-export default function Create({ auth, states }) {
+export default function Create({ auth, cities, neighborhoods}) {
     const { data, setData, post, processing, reset, errors } = useForm({
-        name: "",
-        state_id: "",
+        zipcode: "",
+        place: "",
+        city_id: "",
+        neighborhood_id: "",
     });
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data)
-        post(route("cities.store"), {
+        post(route("zip-codes.store"), {
             onSuccess: () => {
                 reset();
             },
@@ -25,16 +27,20 @@ export default function Create({ auth, states }) {
     };
 
     return (
-        <HeaderCustom auth={auth} title={"Cities"} head={"Create City"}>
-                <CityForm
+        <HeaderCustom auth={auth} title={"Zip Codes"} head={"Create Zip Code"}>
+
+                <StateForm
                     data={data}
                     errors={errors}
                     setData={setData}
                     submit={submit}
                     cancel={cancel}
                     processing={processing}
-                    states={states}
+
+                    cities={cities}
+                    neighborhoods={neighborhoods}
                 />
-         </HeaderCustom>
+
+        </HeaderCustom>
     );
 }

@@ -55,4 +55,8 @@ class User extends Authenticatable
     function neighborhoods() : HasMany{
         return $this->hasMany(Neighborhood::class);
     }
+
+    function zipcodes() : HasMany{
+        return $this->hasMany(ZipCode::class);
+    }
 }

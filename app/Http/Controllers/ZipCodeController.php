@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ZipCode;
 use App\Http\Requests\StoreZipCodeRequest;
 use App\Http\Requests\UpdateZipCodeRequest;
+use App\Models\City;
+use App\Models\Neighborhood;
 use Inertia\Inertia;
 
 class ZipCodeController extends Controller
@@ -15,8 +17,8 @@ class ZipCodeController extends Controller
     public function index()
     {
         return Inertia::render('ZipCodes/Index', [
-            'states' =>
-            ZipCode::with(['user:id,name','city:id,name'])->latest()->get(),
+            'zip_codes' =>
+            ZipCode::with(['user:id,name','city:id,name','neighborhood:id,name'])->latest()->get(),
         ]);
     }
 
@@ -25,7 +27,10 @@ class ZipCodeController extends Controller
      */
     public function create()
     {
-        return Inertia::render('ZipCodes/Create');
+        return Inertia::render('ZipCodes/Create',[
+            'cities' => City::select('id', 'name as label')->orderBy('name')->get(),
+            'neighborhoods' => Neighborhood::select('id', 'name as label')->orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -35,10 +40,10 @@ class ZipCodeController extends Controller
     {
         $zip_code = $request->validated();
 
-        $create = $request->user()->states()->create($zip_code);
+        $create = $request->user()->zipcodes()->create($zip_code);
 
         if ($create) {
-            return redirect()->route('zip_codes.index');
+            return redirect()->route('zip-codes.index');
         }
         return abort(500);
     }
@@ -61,7 +66,9 @@ class ZipCodeController extends Controller
         return Inertia::render(
             'ZipCodes/Edit',
             [
-                'zip_codes' => ZipCode::findOrFail($id),
+                'zip_code' => ZipCode::findOrFail($id),
+                'cities' => City::select('id', 'name as label')->orderBy('name')->get(),
+                'neighborhoods' => Neighborhood::select('id', 'name as label')->orderBy('name')->get(),
             ]
         );
     }
@@ -82,7 +89,7 @@ class ZipCodeController extends Controller
         // Atualize outros campos com os dados validados
         $zip_code->update($validatedData);
 
-        return redirect()->route('zip_codes.index');
+        return redirect()->route('zip-codes.index');
     }
 
     /**
@@ -97,7 +104,7 @@ class ZipCodeController extends Controller
         $delete = $zip_code->delete();
 
         if ($delete) {
-            return redirect()->route('zip_codes.index');
+            return redirect()->route('zip-codes.index');
         }
 
         return abort(500);

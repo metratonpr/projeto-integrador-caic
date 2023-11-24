@@ -1,6 +1,7 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm } from '@inertiajs/react';
-import StateForm from './StateForm';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, useForm } from "@inertiajs/react";
+import StateForm from "./StateForm";
+import HeaderCustom from "@/Components/HeaderCustom";
 
 export default function Create({ auth }) {
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -23,21 +24,17 @@ export default function Create({ auth }) {
     };
 
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">States</h2>}
-        >
-            <Head title="Create" />
-            <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+        <HeaderCustom auth={auth} title={"States"} head={"Create State"}>
+
                 <StateForm
                     data={data}
                     errors={errors}
-                    setData={setData}                    
+                    setData={setData}
                     submit={submit}
                     cancel={cancel}
                     processing={processing}
                 />
-            </div>
-        </AuthenticatedLayout>
+
+        </HeaderCustom>
     );
 }
