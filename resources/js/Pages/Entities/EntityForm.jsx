@@ -57,7 +57,7 @@ const CustomForm = ({
                 <InputError message={errors.rg_ie} className="mt-2" />
             </div>
             <div>
-                <InputLabel htmlFor="phone" value="E-mail" />
+                <InputLabel htmlFor="email" value="E-mail" />
                 <TextInput
                     id="email"
                     name="email"

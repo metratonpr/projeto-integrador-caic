@@ -39,7 +39,6 @@ const CustomForm = ({
                     value={data.place}
                     className="mt-1 block w-full"
                     autoComplete="place"
-                    isFocused={true}
                     onChange={(e) => setData("place", e.target.value)}
                     required
                 />
