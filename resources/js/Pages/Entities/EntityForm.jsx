@@ -4,16 +4,15 @@ import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-const CustomForm = ({
-    data,
-    errors,
-    setData,
-    submit,
-    cancel,
-    processing
-}) => {
+const CustomForm = ({ data, errors, setData, submit, cancel, processing }) => {
+
+
     return (
-        <form onSubmit={submit} encType="multipart/form-data" className="w-1/2 mx-auto">
+        <form
+            onSubmit={submit}
+            encType="multipart/form-data"
+            className="w-1/2 mx-auto"
+        >
             <div>
                 <InputLabel htmlFor="name" value="Name" />
                 <TextInput
@@ -85,9 +84,12 @@ const CustomForm = ({
                 <InputError message={errors.phone} className="mt-2" />
             </div>
 
-
             <div className="space-x-2">
-                <PrimaryButton className="mt-4" type="submit" disabled={processing}>
+                <PrimaryButton
+                    className="mt-4"
+                    type="submit"
+                    disabled={processing}
+                >
                     Salvar
                 </PrimaryButton>
                 <button className="mt-4" onClick={cancel} disabled={processing}>
