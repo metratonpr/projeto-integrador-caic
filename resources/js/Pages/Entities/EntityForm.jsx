@@ -3,6 +3,7 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
+import ZipCodeSearch from "../ZipCodes/ZipCodeSearch";
 
 const CustomForm = ({ data, errors, setData, submit, cancel, processing }) => {
 
@@ -83,6 +84,7 @@ const CustomForm = ({ data, errors, setData, submit, cancel, processing }) => {
                 />
                 <InputError message={errors.phone} className="mt-2" />
             </div>
+            <ZipCodeSearch/>
 
             <div className="space-x-2">
                 <PrimaryButton
