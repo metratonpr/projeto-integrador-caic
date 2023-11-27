@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AddressController extends Controller
@@ -94,4 +95,6 @@ class AddressController extends Controller
 
         return abort(500);
     }
+
+
 }

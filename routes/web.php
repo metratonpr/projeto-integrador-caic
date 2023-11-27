@@ -67,11 +67,14 @@ Route::resource('neighborhoods', NeighborhoodController::class)
 Route::resource('zip-codes', ZipCodeController::class)
     ->middleware(['auth', 'verified']);
 
+Route::get('/zip-codes-search', [ZipCodeController::class, 'search'])->middleware(['auth', 'verified'])->name('zip-codes.search');
+
 Route::resource('entities', EntityController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('addresses', AddressController::class)
     ->middleware(['auth', 'verified']);
+
 
 Route::resource('stores', StoreController::class)
     ->middleware(['auth', 'verified']);
@@ -88,4 +91,4 @@ Route::resource('price-lists', PriceListController::class)
 Route::resource('budgets', BudgetController::class)
     ->middleware(['auth', 'verified']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

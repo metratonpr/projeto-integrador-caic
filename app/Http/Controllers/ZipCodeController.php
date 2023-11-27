@@ -7,6 +7,7 @@ use App\Http\Requests\StoreZipCodeRequest;
 use App\Http\Requests\UpdateZipCodeRequest;
 use App\Models\City;
 use App\Models\Neighborhood;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ZipCodeController extends Controller
@@ -108,5 +109,22 @@ class ZipCodeController extends Controller
         }
 
         return abort(500);
+    }
+
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'place' => 'required|string',
+        ]);
+
+        $place = $request->input('place');
+
+        $zip_codes = ZipCode::where('place', 'like', "%$place%")
+            ->get();
+
+
+
+        return response()->json($zip_codes);
     }
 }
