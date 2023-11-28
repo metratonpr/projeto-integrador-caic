@@ -41,6 +41,7 @@ class ZipCodeController extends Controller
     {
         $zip_code = $request->validated();
 
+
         $create = $request->user()->zipcodes()->create($zip_code);
 
         if ($create) {
@@ -122,8 +123,6 @@ class ZipCodeController extends Controller
 
         $zip_codes = ZipCode::where('place', 'like', "%$place%")
             ->get();
-
-
 
         return response()->json($zip_codes);
     }

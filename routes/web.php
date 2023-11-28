@@ -67,7 +67,7 @@ Route::resource('neighborhoods', NeighborhoodController::class)
 Route::resource('zip-codes', ZipCodeController::class)
     ->middleware(['auth', 'verified']);
 
-Route::get('/zip-codes-search', [ZipCodeController::class, 'search'])->middleware(['auth', 'verified'])->name('zip-codes.search');
+    Route::get('/zip-codes/search', [ZipCodeController::class, 'search'])->middleware(['auth', 'verified'])->name('zip-codes.search');
 
 Route::resource('entities', EntityController::class)
     ->middleware(['auth', 'verified']);

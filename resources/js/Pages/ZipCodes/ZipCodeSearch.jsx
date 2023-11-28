@@ -11,6 +11,7 @@ import TableRow from "@/Components/TableRow";
 import TableCell from "@/Components/TableCell";
 import TableButton from "@/Components/TableButton";
 import { router } from '@inertiajs/react'
+import axios from 'axios';
 
 export default function ZipCodeSearch({ selectZipCode }) {
     const [query, setQuery] = useState("");
@@ -24,16 +25,14 @@ export default function ZipCodeSearch({ selectZipCode }) {
             handleSearch();
         }, 300);
     };
-
     const handleSearch = async () => {
         try {
-            const response = await router.get(`/zip-codes-search`, { query }, { preserveState: true });
-            console.log("Resultado: ",response)
-            setResults(response);
+            const response = await axios.get(`${process.env.APP_URL}/zip-codes/search?place=${query}`);
+            setResults(response.data);
+            console.log("Resultado: ", response);
         } catch (error) {
             console.error("Error fetching search results:", error);
         }
-
     };
 
     return (
