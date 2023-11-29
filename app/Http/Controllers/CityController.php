@@ -108,4 +108,14 @@ class CityController extends Controller
 
         return abort(500);
     }
+
+    public function search_by_states($id){
+
+        $cities =  City::where('state_id','=', $id)
+        ->select('id', 'name as label')
+        ->latest()
+        ->get();
+
+        return response()->json($cities);
+    }
 }

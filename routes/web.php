@@ -61,20 +61,22 @@ Route::resource('states', StateController::class)
 Route::resource('cities', CityController::class)
     ->middleware(['auth', 'verified']);
 
+Route::get('/cities/search/{id}', [CityController::class, 'search_by_states'])->middleware(['auth', 'verified'])->name('cities.search_by_states');
+
 Route::resource('neighborhoods', NeighborhoodController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('zip-codes', ZipCodeController::class)
     ->middleware(['auth', 'verified']);
 
-    Route::get('/zip-codes/search', [ZipCodeController::class, 'search'])->middleware(['auth', 'verified'])->name('zip-codes.search');
+Route::get('/zip-codes/search/{zipcode}', [ZipCodeController::class, 'search'])->middleware(['auth', 'verified'])->name('zip-codes.search');
 
 Route::resource('entities', EntityController::class)
     ->middleware(['auth', 'verified']);
 
-Route::resource('addresses', AddressController::class)
-    ->middleware(['auth', 'verified']);
 
+Route::get('/entities/addresses/{entity}', [EntityController::class, 'addresses'])->middleware(['auth', 'verified'])->name('entities.addresses');
+Route::get('/entities/addresses/create/{entity}', [EntityController::class, 'create_address'])->middleware(['auth', 'verified'])->name('entities.create_address');
 
 Route::resource('stores', StoreController::class)
     ->middleware(['auth', 'verified']);

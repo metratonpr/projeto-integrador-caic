@@ -3,7 +3,7 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
-import ZipCodeSearch from "../ZipCodes/ZipCodeSearch";
+
 
 const CustomForm = ({ data, errors, setData, submit, cancel, processing }) => {
 
@@ -36,7 +36,7 @@ const CustomForm = ({ data, errors, setData, submit, cancel, processing }) => {
                     value={data.cpf_cnpj}
                     className="mt-1 block w-full"
                     autoComplete="cpf_cnpj"
-                    isFocused={true}
+
                     onChange={(e) => setData("cpf_cnpj", e.target.value)}
                     required
                 />
@@ -50,7 +50,7 @@ const CustomForm = ({ data, errors, setData, submit, cancel, processing }) => {
                     value={data.rg_ie}
                     className="mt-1 block w-full"
                     autoComplete="rg_ie"
-                    isFocused={true}
+
                     onChange={(e) => setData("rg_ie", e.target.value)}
                     required
                 />
@@ -64,7 +64,7 @@ const CustomForm = ({ data, errors, setData, submit, cancel, processing }) => {
                     value={data.email}
                     className="mt-1 block w-full"
                     autoComplete="email"
-                    isFocused={true}
+
                     onChange={(e) => setData("email", e.target.value)}
                     required
                 />
@@ -78,13 +78,28 @@ const CustomForm = ({ data, errors, setData, submit, cancel, processing }) => {
                     value={data.phone}
                     className="mt-1 block w-full"
                     autoComplete="phone"
-                    isFocused={true}
+
                     onChange={(e) => setData("phone", e.target.value)}
                     required
                 />
                 <InputError message={errors.phone} className="mt-2" />
             </div>
-            <ZipCodeSearch/>
+
+            <div>
+                <InputLabel htmlFor="cep" value="CEP" />
+                <TextInput
+                    id="cep"
+                    name="cep"
+                    value={data.cep}
+                    className="mt-1 block w-full"
+                    autoComplete="cep"
+
+                    onChange={(e) => setData("cep", e.target.value)}
+                    required
+                />
+                <InputError message={errors.cep} className="mt-2" />
+            </div>
+
 
             <div className="space-x-2">
                 <PrimaryButton

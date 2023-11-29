@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Entity;
 use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
+use App\Models\Neighborhood;
+use App\Models\State;
 use Inertia\Inertia;
 
 class EntityController extends Controller
@@ -93,5 +95,24 @@ class EntityController extends Controller
         }
 
         return abort(500);
+    }
+
+
+    public function addresses(Entity $entity)
+    {
+
+        return Inertia::render('Addresses/Index', [
+            'addresses' => $entity->addresses,
+            'entity' => $entity,
+        ]);
+    }
+
+    public function create_address(Entity $entity)
+    {
+        return Inertia::render('Addresses/Create', [
+            'entity' => $entity,
+            'states' => State::select('id', 'name as label')->orderBy('name')->get(),
+            'neighborhoods' => Neighborhood::select('id', 'name as label')->orderBy('name')->get()
+        ]);
     }
 }

@@ -97,9 +97,9 @@ class ZipCodeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($zip_code)
     {
-        $zip_code = ZipCode::findOrFail($id);
+        $zip_code = ZipCode::where('zipcode','like',$zip_code);
 
         // $this->authorize('delete', $zip_code);
 
@@ -113,15 +113,11 @@ class ZipCodeController extends Controller
     }
 
 
-    public function search(Request $request)
+    public function search($zip_code)
     {
-        $request->validate([
-            'place' => 'required|string',
-        ]);
 
-        $place = $request->input('place');
-
-        $zip_codes = ZipCode::where('place', 'like', "%$place%")
+        $zip_codes = ZipCode::where('zipcode',"=",$zip_code)
+        ->with('neighborhood:id', 'city:id,state_id')
             ->get();
 
         return response()->json($zip_codes);
