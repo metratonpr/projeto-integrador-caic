@@ -10,7 +10,6 @@ export default function Create({ auth, states, entity, neighborhoods }) {
         zipcode_id: "",
         entity_id: entity.id,
         zipcode: "",
-        state: "",
         city: "",
         place: "",
         neighborhood: "",

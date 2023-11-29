@@ -17,7 +17,7 @@ const CustomForm = ({
     neighborhoods,
 }) => {
     // const [zipcode, setZipCode] = useState("");
-    // const [state, setState] = useState("");
+    const [state, setState] = useState("");
     // const [city, setCity] = useState("");
     // const [place, setPlace] = useState("");
     const [cities, setCities] = useState([]);
@@ -26,7 +26,7 @@ const CustomForm = ({
     const handleState = async (e) => {
         e.preventDefault();
         // setState(e.target.value);
-        setData("state", e.target.value);
+        setState(e.target.value);
         setCities([]);
 
         searchCities(e.target.value);
@@ -59,6 +59,7 @@ const CustomForm = ({
             const zip = response.data;
 
             console.log(zip);
+            console.log(data);
 
             if (zip.length > 0) {
                 const { id, city, neighborhood_id, place } = zip[0];
@@ -68,12 +69,12 @@ const CustomForm = ({
 
                 setData("place", place);
 
-                setData("state", city.state_id);
+                setState(city.state_id);
                 searchCities(city.state_id);
-                setData("city", city.id);
                 setData("neighborhood", neighborhood_id);
-                // setPlace(place);
+                setData("city", city.id);
 
+                // setPlace(place);
                 // setState(city.state_id);
                 // searchCities(city.state_id);
                 // setCity(city.id);
@@ -132,7 +133,7 @@ const CustomForm = ({
                     name="state"
                     type="select"
                     options={states}
-                    value={data.state}
+                    value={state}
                     className="mt-1 block w-full"
                     onChange={handleState}
                     required
