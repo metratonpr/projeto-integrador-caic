@@ -75,8 +75,12 @@ Route::resource('entities', EntityController::class)
     ->middleware(['auth', 'verified']);
 
 
-Route::get('/entities/addresses/{entity}', [EntityController::class, 'addresses'])->middleware(['auth', 'verified'])->name('entities.addresses');
-Route::get('/entities/addresses/create/{entity}', [EntityController::class, 'create_address'])->middleware(['auth', 'verified'])->name('entities.create_address');
+Route::get('/entities/addresses/{entity}', [AddressController::class, 'addresses'])->middleware(['auth', 'verified'])->name('entities.addresses');
+Route::get('/entities/addresses/create/{entity}', [AddressController::class, 'create_address'])->middleware(['auth', 'verified'])->name('entities.create_address');
+Route::post('/entities/addresses/{entity}', [AddressController::class, 'store'])->middleware(['auth', 'verified'])->name("address.store");
+Route::get('/entities/addresses/edit/{address}/{entity}', [AddressController::class, 'edit'])->middleware(['auth', 'verified'])->name('entities.edit_address');
+Route::patch('/entities/addresses/update/{id}', [AddressController::class, 'update'])->middleware(['auth', 'verified'])->name("addressess.update");
+Route::delete('/entities/addresses/{id}', [AddressController::class, 'destroy'])->middleware(['auth', 'verified'])->name("addresses.destroy");
 
 Route::resource('stores', StoreController::class)
     ->middleware(['auth', 'verified']);

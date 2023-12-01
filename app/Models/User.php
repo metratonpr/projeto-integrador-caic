@@ -75,12 +75,15 @@ class User extends Authenticatable
     function budgets() : HasMany{
         return $this->hasMany(Budget::class);
     }
- 
+
     function entities() : HasMany{
         return $this->hasMany(Entity::class);
     }
 
     function price_lists() : HasMany{
         return $this->hasMany(Entity::class);
+    }
+    function addresses() : HasMany{
+        return $this->hasMany(Address::class);
     }
 }

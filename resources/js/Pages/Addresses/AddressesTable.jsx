@@ -55,6 +55,7 @@ const CustomTable = () => {
                 <TableBody>
                     {addresses.map((address) => (
                         <TableRow key={address.id}>
+                            {console.log(address)}
                             <TableCell>{address.zipcode.zipcode}</TableCell>
                             <TableCell>{address.zipcode.place}</TableCell>
                             <TableCell>{address.number}</TableCell>
@@ -62,18 +63,9 @@ const CustomTable = () => {
                             <TableCell>{address.zipcode.city.name}</TableCell>
                             <TableCell style={{ width: "10%" }}>
                                 <NavLink
-                                    href={route("addresses.create", {
+                                    href={route("entities.edit_address", {
                                         address: address.id,
-                                    })}
-                                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                >
-                                    View
-                                </NavLink>
-                            </TableCell>
-                            <TableCell style={{ width: "10%" }}>
-                                <NavLink
-                                    href={route("addresses.edit", {
-                                        address: address.id,
+                                        entity: entity
                                     })}
                                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                 >

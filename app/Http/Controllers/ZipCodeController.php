@@ -115,9 +115,8 @@ class ZipCodeController extends Controller
 
     public function search($zip_code)
     {
-
-        $zip_codes = ZipCode::where('zipcode',"=",$zip_code)
-        ->with('neighborhood:id', 'city:id,state_id')
+        $zip_codes = ZipCode::where('zipcode', $zip_code)
+            ->with(['neighborhood:id,name', 'city:id,name,state_id','city.state:id,name' ])
             ->get();
 
         return response()->json($zip_codes);

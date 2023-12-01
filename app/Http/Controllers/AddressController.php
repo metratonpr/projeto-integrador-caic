@@ -5,65 +5,59 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
+use App\Models\Entity;
+use App\Models\ZipCode;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AddressController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function addresses(Entity $entity)
     {
+
+        $addresses = Address::where('entity_id', $entity->id)->with('zipcode','zipcode.city')->latest()->get();
         return Inertia::render('Addresses/Index', [
-            'addresses' => Address::with('zipCode', 'entity')->latest()->get(),
+            'addresses' => $addresses,
+            'entity' => $entity,
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create_address(Entity $entity)
     {
-        return Inertia::render('Addresses/Create');
+        return Inertia::render('Addresses/Create', [
+            'entity' => $entity
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAddressRequest $request)
-    {
-        $validatedData = $request->validated();
 
-        $create = $request->user()->addresses()->create($validatedData);
+    public function store(StoreAddressRequest $request, Entity $entity)
+    {
+        $data = $request->validated();
+
+        $data['entity_id'] = $entity->id;
+
+
+        $create = $request->user()->addresses()->create($data);
 
         if ($create) {
-            return redirect()->route('addresses.index');
+            return redirect()->route('entities.addresses',['entity' => $entity]);
         }
         return abort(500);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        return Inertia::render('Addresses/Show', [
-            'address' => Address::with('zipCode', 'entity')->findOrFail($id),
-        ]);
-    }
-
-    /**
+     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id, Entity $entity)
     {
-        return Inertia::render(
-            'Addresses/Edit',
-            [
-                'address' => Address::findOrFail($id),
-            ]
-        );
+        $address = Address::findOrFail($id);
+        $zip_code = ZipCode::findOrFail($address->zipcode_id);
+
+        return Inertia::render('Addresses/Edit', [
+            'address' => $address,
+            'entity' => $entity,
+            'zip_code' => $zip_code
+        ]);
     }
 
     /**
@@ -71,13 +65,21 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, $id)
     {
+
+        // Encontra o state a ser atualizado
         $address = Address::findOrFail($id);
 
-        $validatedData = $request->validated();
+        $entity = Entity::findOrFail($address->entity_id);
 
+        //  $this->authorize('update', $address);
+
+        // Valida os dados do formulário usando UpdatestateRequest
+        $validatedData = $request->validated();
+        // Atualize outros campos com os dados validados
         $address->update($validatedData);
 
-        return redirect()->route('addresses.index');
+
+        return redirect()->route('entities.addresses',['entity' => $entity]);
     }
 
     /**
@@ -87,14 +89,20 @@ class AddressController extends Controller
     {
         $address = Address::findOrFail($id);
 
+        $entity = Entity::findOrFail($address->entity_id);
+
+        // $this->authorize('delete', $address);
+
         $delete = $address->delete();
 
         if ($delete) {
-            return redirect()->route('addresses.index');
+            return redirect()->route('entities.addresses',['entity' => $entity]);
         }
 
         return abort(500);
     }
+
+
 
 
 }

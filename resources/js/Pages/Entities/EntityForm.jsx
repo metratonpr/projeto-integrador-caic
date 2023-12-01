@@ -85,21 +85,6 @@ const CustomForm = ({ data, errors, setData, submit, cancel, processing }) => {
                 <InputError message={errors.phone} className="mt-2" />
             </div>
 
-            <div>
-                <InputLabel htmlFor="cep" value="CEP" />
-                <TextInput
-                    id="cep"
-                    name="cep"
-                    value={data.cep}
-                    className="mt-1 block w-full"
-                    autoComplete="cep"
-
-                    onChange={(e) => setData("cep", e.target.value)}
-                    required
-                />
-                <InputError message={errors.cep} className="mt-2" />
-            </div>
-
 
             <div className="space-x-2">
                 <PrimaryButton

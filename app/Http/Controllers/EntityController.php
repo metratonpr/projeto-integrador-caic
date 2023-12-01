@@ -98,21 +98,5 @@ class EntityController extends Controller
     }
 
 
-    public function addresses(Entity $entity)
-    {
-
-        return Inertia::render('Addresses/Index', [
-            'addresses' => $entity->addresses,
-            'entity' => $entity,
-        ]);
-    }
-
-    public function create_address(Entity $entity)
-    {
-        return Inertia::render('Addresses/Create', [
-            'entity' => $entity,
-            'states' => State::select('id', 'name as label')->orderBy('name')->get(),
-            'neighborhoods' => Neighborhood::select('id', 'name as label')->orderBy('name')->get()
-        ]);
-    }
+   
 }

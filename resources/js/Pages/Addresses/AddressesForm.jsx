@@ -6,93 +6,56 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import InputSelect from "@/Components/InputSelect";
 import axios from "axios";
 
-const CustomForm = ({
-    data,
-    errors,
-    setData,
-    submit,
-    cancel,
-    processing,
-    states,
-    neighborhoods,
-}) => {
-    // const [zipcode, setZipCode] = useState("");
+const CustomForm = ({ data, errors, setData, submit, cancel, processing, editar }) => {
     const [state, setState] = useState("");
-    // const [city, setCity] = useState("");
-    // const [place, setPlace] = useState("");
-    const [cities, setCities] = useState([]);
-    // const [neighborhood, setNeighborhood] = useState("");
+    const [city, setCity] = useState("");
+    const [place, setPlace] = useState("");
+    const [neighborhood, setNeighborhood] = useState("");
 
     const handleState = async (e) => {
         e.preventDefault();
-        // setState(e.target.value);
         setState(e.target.value);
-        setCities([]);
-
-        searchCities(e.target.value);
-    };
-
-    const searchCities = async (state) => {
-        try {
-            const response = await axios.get(
-                route("cities.search_by_states", { id: state })
-            );
-
-            setCities(response.data);
-            if (cities.length > 0) {
-                setData("city", cities[0].id);
-            }
-            // console.log("Resultado: ", response);
-        } catch (error) {
-            console.error("Error fetching search results:", error);
-        }
     };
 
     const searchZipCodes = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await axios.get(
-                route("zip-codes.search", { zipcode: data.zipcode })
-            );
+        console.log('search')
 
-            const zip = response.data;
+        if (data.zipcode.length > 0) {
+            try {
+                const response = await axios.get(
+                    route("zip-codes.search", { zipcode: data.zipcode })
+                );
 
-            console.log(zip);
-            console.log(data);
+                const zip = response.data;
 
-            if (zip.length > 0) {
-                const { id, city, neighborhood_id, place } = zip[0];
-                console.log("Items:", id, city, neighborhood_id, place)
+                console.log(zip);
+                console.log("Antes >", data);
 
-                setData("zipcode_id", id);
-
-                setData("place", place);
-
-                setState(city.state_id);
-                searchCities(city.state_id);
-                setData("neighborhood", neighborhood_id);
-                setData("city", city.id);
-
-                // setPlace(place);
-                // setState(city.state_id);
-                // searchCities(city.state_id);
-                // setCity(city.id);
-                // setNeighborhood(neighborhood_id);
+                if (zip.length > 0) {
+                    const { id, city, neighborhood, place, state } = zip[0];
+                    setPlace(place);
+                    setCity(city.name);
+                    setState(city.state.name);
+                    setNeighborhood(neighborhood.name);
+                    setData("zipcode_id", id);
+                    console.log("Depois >", data);
+                }
+            } catch (error) {
+                console.error("Error fetching search results:", error);
             }
-        } catch (error) {
-            console.error("Error fetching search results:", error);
         }
     };
 
     useEffect(() => {
-        // Verifica se há pelo menos um item no array 'states'
-        if (states.length > 0) {
-            // Define o estado para o ID do primeiro item no array
-            setData("state", states[0].id);
+        // Verifica se data.edit é true e executa a pesquisa automaticamente
+        if (editar) {
+            console.log(data)
+            const fakeEvent = { preventDefault: () => {} };
+            searchZipCodes(fakeEvent); // Você pode passar um evento vazio aqui
         }
-        // Dependência vazia significa que este efeito só será executado uma vez após a montagem inicial
-    }, []);
+    }, [editar]); // Execute o efeito quando data.edit muda
 
     return (
         <form
@@ -125,52 +88,42 @@ const CustomForm = ({
                 </div>
             </div>
 
-            <div className="mb-2">
-                {/* Adicione o campo de seleção para os estados */}
+            <div>
                 <InputLabel htmlFor="state" value="State" />
-                <InputSelect
+                <TextInput
                     id="state"
                     name="state"
-                    type="select"
-                    options={states}
                     value={state}
                     className="mt-1 block w-full"
-                    onChange={handleState}
-                    required
+                    autoComplete="state"
+                    onChange={(e) => setState(e.target.value)}
+                    disabled={true}
                 />
-                <InputError message={errors.state} className="mt-2" />
             </div>
-
-            <div className="mb-2">
-                {/* Adicione o campo de seleção para os estados */}
-                <InputLabel htmlFor="city_id" value="City" />
-                <InputSelect
-                    id="city_id"
-                    name="city_id"
-                    type="select"
-                    options={cities}
-                    value={data.city}
+            <div>
+                <InputLabel htmlFor="city" value="City" />
+                <TextInput
+                    id="city"
+                    name="city"
+                    value={city}
                     className="mt-1 block w-full"
-                    onChange={(e) => setData("city", e.target.value)}
-                    required
+                    autoComplete="city"
+                    onChange={(e) => setCity(e.target.value)}
+                    disabled={true}
                 />
-                <InputError message={errors.state_id} className="mt-2" />
             </div>
 
-            <div className="mb-2">
-                {/* Adicione o campo de seleção para os estados */}
+            <div>
                 <InputLabel htmlFor="neighborhood" value="Neighborhood" />
-                <InputSelect
+                <TextInput
                     id="neighborhood"
                     name="neighborhood"
-                    type="select"
-                    options={neighborhoods}
-                    value={data.neighborhood}
+                    value={neighborhood}
                     className="mt-1 block w-full"
-                    onChange={(e) => setData("neighborhood", e.target.value)}
-                    required
+                    autoComplete="neighborhood"
+                    onChange={(e) => setNeighborhood(e.target.value)}
+                    disabled={true}
                 />
-                <InputError message={errors.state_id} className="mt-2" />
             </div>
 
             <div>
@@ -178,13 +131,12 @@ const CustomForm = ({
                 <TextInput
                     id="place"
                     name="place"
-                    value={data.place}
+                    value={place}
                     className="mt-1 block w-full"
                     autoComplete="place"
-                    onChange={(e) => setData("place", e.target.value)}
-                    required
+                    onChange={(e) => setPlace(e.target.value)}
+                    disabled={true}
                 />
-                <InputError message={errors.place} className="mt-2" />
             </div>
             <div>
                 <InputLabel htmlFor="number" value="Number" />

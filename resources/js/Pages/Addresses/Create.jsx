@@ -1,18 +1,15 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
-import StateForm from "./AddressesForm";
+import AddressForm from "./AddressesForm";
 import HeaderCustom from "@/Components/HeaderCustom";
 
-export default function Create({ auth, states, entity, neighborhoods }) {
+export default function Create({ auth, entity}) {
     const { data, setData, post, processing, reset, errors } = useForm({
         number: "",
         complement: "",
         zipcode_id: "",
         entity_id: entity.id,
         zipcode: "",
-        city: "",
-        place: "",
-        neighborhood: "",
 
     });
 
@@ -20,11 +17,11 @@ export default function Create({ auth, states, entity, neighborhoods }) {
         e.preventDefault();
 
         console.log(data);
-        // post(route("address.store"), {
-        //     onSuccess: () => {
-        //         reset();
-        //     },
-        // });
+        post(route("address.store",{entity}), {
+            onSuccess: () => {
+                reset();
+            },
+        });
     };
 
     const cancel = () => {
@@ -35,15 +32,14 @@ export default function Create({ auth, states, entity, neighborhoods }) {
 
     return (
         <HeaderCustom auth={auth} title={"Address"} head={"Create Address"}>
-            <StateForm
+            <AddressForm
                 data={data}
                 errors={errors}
                 setData={setData}
                 submit={submit}
                 cancel={cancel}
                 processing={processing}
-                states={states}
-                neighborhoods={neighborhoods}
+                editar={false}
             />
         </HeaderCustom>
     );
